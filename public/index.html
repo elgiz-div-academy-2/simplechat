@@ -94,6 +94,24 @@
         chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the latest message
       });
 
+      socket.on("user-joined", ({ username }) => {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("mb-2");
+        messageElement.classList.add("text-green-500");
+        messageElement.innerHTML = `${username} is joined to chat`;
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the latest message
+      });
+
+      socket.on("user-left", ({ username }) => {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("mb-2");
+        messageElement.classList.add("text-red-500");
+        messageElement.innerHTML = `${username} is left to chat`;
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the latest message
+      });
+
       // Handle sending messages to the server
       sendMessageBtn.addEventListener("click", () => {
         const message = messageInput.value.trim();

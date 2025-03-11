@@ -13,7 +13,12 @@ module.exports = async (server) => {
       } else {
         socket.data.nickname = nickname;
         cb(true);
+        io.emit("user-joined", { username: nickname });
       }
+    });
+
+    socket.on("disconnect", () => {
+      io.emit("user-left", { username: socket.data.nickname });
     });
 
     socket.on("new-message", (messageContent) => {
